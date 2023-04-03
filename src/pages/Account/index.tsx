@@ -154,7 +154,7 @@ const Account: React.FC = () => {
         search={false}
         actionRef={actionRef}
         cardBordered
-        request={async (params: { current: number; pageSize: number }) => {
+        request={async (params) => {
           const res = await getUserList({
             current: params.current,
             pageSize: params.pageSize,

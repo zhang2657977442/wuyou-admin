@@ -5,8 +5,10 @@ import {
   ProFormSelect,
   ProFormText,
   ProFormTextArea,
+  ProFormTimePicker,
 } from '@ant-design/pro-form';
 import styles from '../index.less';
+import { getIndustryList } from '@/apis/industry';
 
 type OperationModalProps = {
   visible: boolean;
@@ -115,9 +117,9 @@ const TableForm: FC<OperationModalProps> = (props) => {
           placeholder="请选择公司规模"
         />
         <ProFormSelect
-          name="workTime"
-          label="工作时间"
-          rules={[{ required: true, message: '请选择工作时间' }]}
+          name="workOvertime"
+          label="加班情况"
+          rules={[{ required: true, message: '请选择加班情况' }]}
           options={[
             {
               label: '不加班',
@@ -132,7 +134,7 @@ const TableForm: FC<OperationModalProps> = (props) => {
               value: '弹性工作',
             },
           ]}
-          placeholder="请选择工作时间"
+          placeholder="请选择加班情况"
         />
         <ProFormSelect
           name="restTime"
@@ -158,8 +160,33 @@ const TableForm: FC<OperationModalProps> = (props) => {
           ]}
           placeholder="请选择休息时间"
         />
+        <ProFormSelect
+          name="industryId"
+          label="所属行业"
+          rules={[{ required: true, message: '请选择所属行业' }]}
+          request={async () => {
+            const res = await getIndustryList({
+              current: 1,
+              pageSize: 999,
+            });
+            return res.data.list.map((item) => {
+              return { label: item.name, value: item.id };
+            });
+          }}
+          placeholder="请选择所属行业"
+        />
+        <ProFormTimePicker.RangePicker
+          label="工作时间"
+          rules={[{ required: true, message: '请选择工作时间' }]}
+          name="workTime"
+        />
       </ProForm.Group>
-      <ProFormTextArea width="xl" label="公司简介" name="introduce" />
+      <ProFormTextArea
+        width="xl"
+        rules={[{ required: true, message: '请输入公司简介' }]}
+        label="公司简介"
+        name="introduce"
+      />
     </ModalForm>
   );
 };

@@ -1,45 +1,59 @@
-import { HeartTwoTone, SmileTwoTone } from '@ant-design/icons';
-import { PageContainer } from '@ant-design/pro-components';
-import { useIntl } from '@umijs/max';
-import { Alert, Card, Typography } from 'antd';
-import React from 'react';
+import { message } from 'antd';
+import { useState } from 'react';
+import { PageContainer, ProForm, ProFormTextArea } from '@ant-design/pro-components';
+import { getCmsList, updateCms } from '@/apis/cms';
+import sleep from '@/utils/sleep';
 
-const Admin: React.FC = () => {
-  const intl = useIntl();
+const updateItem = async (params: CmsType.Item) => {
+  const res = await updateCms(params);
+  if (res.code === 0) {
+    message.success('操作成功');
+  } else {
+    message.error(res.message);
+  }
+};
+
+export default () => {
+  const [info, setInfo] = useState<CmsType.Item | undefined>(undefined);
   return (
-    <PageContainer
-      content={intl.formatMessage({
-        id: 'pages.admin.subPage.title',
-        defaultMessage: 'This page can only be viewed by admin',
-      })}
-    >
-      <Card>
-        <Alert
-          message={intl.formatMessage({
-            id: 'pages.welcome.alertMessage',
-            defaultMessage: 'Faster and stronger heavy-duty components have been released.',
-          })}
-          type="success"
-          showIcon
-          banner
-          style={{
-            margin: -12,
-            marginBottom: 48,
+    <PageContainer>
+      <ProForm<CmsType.Item>
+        submitter={{
+          // 配置按钮文本
+          searchConfig: {
+            resetText: '重置',
+            submitText: '保存',
+          },
+        }}
+        onFinish={async (values) => {
+          await sleep(2000);
+          updateItem({
+            ...values,
+            id: info?.id,
+          });
+        }}
+        request={async () => {
+          const res = await getCmsList({
+            current: 1,
+            pageSize: 1,
+            type: '0',
+          });
+          setInfo(res.data.list[0]);
+          return {
+            ...res.data.list[0],
+          };
+        }}
+      >
+        <ProFormTextArea
+          width="xl"
+          fieldProps={{
+            autoSize: { minRows: 15 },
           }}
+          rules={[{ required: true, message: '请输入内容详情' }]}
+          label="内容详情"
+          name="text"
         />
-        <Typography.Title level={2} style={{ textAlign: 'center' }}>
-          <SmileTwoTone /> Ant Design Pro <HeartTwoTone twoToneColor="#eb2f96" /> You
-        </Typography.Title>
-      </Card>
-      <p style={{ textAlign: 'center', marginTop: 24 }}>
-        Want to add more pages? Please refer to{' '}
-        <a href="https://pro.ant.design/docs/block-cn" target="_blank" rel="noopener noreferrer">
-          use block
-        </a>
-        。
-      </p>
+      </ProForm>
     </PageContainer>
   );
 };
-
-export default Admin;

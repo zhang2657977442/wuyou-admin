@@ -1,8 +1,9 @@
 import { PlusOutlined } from '@ant-design/icons';
 import React, { useState, useRef } from 'react';
+import moment from 'moment';
 import type { ActionType, ProColumns } from '@ant-design/pro-components';
-import { PageContainer, ProTable } from '@ant-design/pro-components';
-import { Button, Modal, message } from 'antd';
+import { PageContainer, ProTable, TableDropdown } from '@ant-design/pro-components';
+import { Button, Modal, message, Space, Tag } from 'antd';
 import { getCompanyList, updateCompany, addCompany, deleteCompany } from '@/apis/company';
 import TableForm from './components/TableForm';
 
@@ -12,12 +13,16 @@ const Company: React.FC = () => {
   const [current, setCurrent] = useState<CompanyType.Item | undefined>(undefined);
 
   const showEditModal = (item: CompanyType.Item) => {
-    setVisible(true);
+    item.workTime = item.workTime.split('-');
+    item.workTime[0] = moment(item.workTime[0], 'HH:mm:ss');
+    item.workTime[1] = moment(item.workTime[1], 'HH:mm:ss');
     setCurrent(item);
+    setVisible(true);
   };
   const handleDone = () => {
-    setVisible(false);
+    actionRef.current?.reloadAndRest?.();
     setCurrent(undefined);
+    setVisible(false);
   };
 
   const addItem = async (params: CompanyType.Item) => {
@@ -63,15 +68,15 @@ const Company: React.FC = () => {
   };
 
   const handleSubmit = (values: CompanyType.Item) => {
-    console.log(values);
+    values.workTime = values.workTime.join('-');
     // 用来区分新增、更新操作
     const method = current?.id ? 'update' : 'add';
     if (method === 'add') {
       addItem(values);
     } else {
       updateItem({
-        ...values,
         id: current?.id,
+        ...values,
       });
     }
   };
@@ -90,6 +95,10 @@ const Company: React.FC = () => {
     {
       title: '公司全称',
       dataIndex: 'fullName',
+    },
+    {
+      title: '所属行业',
+      dataIndex: 'industryName',
     },
     {
       title: '公司性质',
@@ -121,6 +130,28 @@ const Company: React.FC = () => {
       dataIndex: 'address',
     },
     {
+      title: '审核状态',
+      dataIndex: 'enableStatus',
+      renderFormItem: (_, { defaultRender }) => {
+        return defaultRender(_);
+      },
+      render: (_, record) => (
+        <Space>
+          <Tag
+            color={
+              record.enableStatus === null ? 'blue' : record.enableStatus === true ? 'green' : 'red'
+            }
+          >
+            {record.enableStatus === null
+              ? '待审核'
+              : record.enableStatus === true
+              ? '审核通过'
+              : '审核失败'}
+          </Tag>
+        </Space>
+      ),
+    },
+    {
       title: '创建时间',
       dataIndex: 'createTime',
       valueType: 'dateTime',
@@ -148,6 +179,28 @@ const Company: React.FC = () => {
         >
           删除
         </a>,
+        record.enableStatus === null ? (
+          <TableDropdown
+            key="actionGroup"
+            onSelect={(key) => {
+              if (key === 'success') {
+                updateItem({
+                  id: record.id,
+                  enableStatus: true,
+                });
+              } else {
+                updateItem({
+                  id: record.id,
+                  enableStatus: false,
+                });
+              }
+            }}
+            menus={[
+              { key: 'success', name: '通过' },
+              { key: 'fial', name: '拒绝' },
+            ]}
+          />
+        ) : null,
       ],
     },
   ];
@@ -156,10 +209,11 @@ const Company: React.FC = () => {
     <PageContainer>
       <ProTable<CompanyType.Item>
         columns={columns}
+        params={{ current: 1, pageSize: 10 }}
         actionRef={actionRef}
         search={false}
         cardBordered
-        request={async (params: { current: number; pageSize: number }) => {
+        request={async (params) => {
           const res = await getCompanyList({
             current: params.current,
             pageSize: params.pageSize,

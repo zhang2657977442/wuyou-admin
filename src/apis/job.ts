@@ -13,23 +13,31 @@ export async function getJobList(params: PageParams) {
   });
 }
 
-// 更新行业信息
-export async function updateRule() {
-  return request<JobType.Item>('/api/rule', {
-    method: 'PUT',
-  });
-}
-
-// 新建行业信息
-export async function addRule() {
-  return request<JobType.Item>('/api/rule', {
+// 更新职位信息
+export async function updateJob(params: JobType.Item) {
+  return request<BaseResponse<boolean>>('/api/job/updateJobInfo', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: params,
   });
 }
 
-// 删除行业信息
-export async function removeRule() {
-  return request<Record<string, any>>('/api/rule', {
+// 新建职位信息
+export async function addJob(params: JobType.Item) {
+  return request<BaseResponse<boolean>>('/api/job/addJob', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: params,
+  });
+}
+
+// 删除职位信息
+export async function deleteJob(id: string) {
+  return request<BaseResponse<boolean>>(`/api/job/deleteJob/${id}`, {
     method: 'DELETE',
   });
 }

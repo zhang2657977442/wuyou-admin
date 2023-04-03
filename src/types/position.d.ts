@@ -1,4 +1,4 @@
-declare namespace IndustryType {
+declare namespace PositionType {
   type Item = {
     id?: string;
     name: string;

@@ -13,23 +13,31 @@ export async function getIndustryList(params: PageParams) {
   });
 }
 
-// 更新行业信息
-export async function updateRule() {
-  return request<IndustryType.Item>('/api/rule', {
-    method: 'PUT',
-  });
-}
-
-// 新建行业信息
-export async function addRule() {
-  return request<IndustryType.Item>('/api/rule', {
+// 更新福利信息
+export async function updateIndustry(params: IndustryType.Item) {
+  return request<BaseResponse<boolean>>('/api/industry/updateIndustry', {
     method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: params,
   });
 }
 
-// 删除行业信息
-export async function removeRule() {
-  return request<Record<string, any>>('/api/rule', {
+// 新建福利信息
+export async function addIndustry(params: IndustryType.Item) {
+  return request<BaseResponse<boolean>>('/api/industry/addIndustry', {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    data: params,
+  });
+}
+
+// 删除福利信息
+export async function deleteIndustry(id: string) {
+  return request<BaseResponse<boolean>>(`/api/industry/deleteIndustry/${id}`, {
     method: 'DELETE',
   });
 }

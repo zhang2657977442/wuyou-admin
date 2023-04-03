@@ -1,7 +1,10 @@
 declare namespace JobType {
   type Item = {
-    id: string;
+    id?: string;
+    companyId: string;
+    postId: string;
     postName: string;
+    companyName: string;
     postCategory: string;
     expRequire: string;
     minEducation: string;
@@ -9,7 +12,7 @@ declare namespace JobType {
     jobType: string;
     skill: string;
     enableStatus: boolean;
-    createTime: Date;
-    updateTime: Date;
+    createTime: string;
+    updateTime: string;
   };
 }

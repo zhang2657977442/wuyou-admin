@@ -13,9 +13,9 @@ export async function getCompanyList(params: PageParams) {
   });
 }
 
-// 更新用户信息
+// 更新公司信息
 export async function updateCompany(params: CompanyType.Item) {
-  return request<BaseResponse<boolean>>('/api/user/updateCompanyInfo', {
+  return request<BaseResponse<boolean>>('/api/company/updateCompanyInfo', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -24,9 +24,9 @@ export async function updateCompany(params: CompanyType.Item) {
   });
 }
 
-// 新建用户信息
+// 新建公司信息
 export async function addCompany(params: CompanyType.Item) {
-  return request<BaseResponse<boolean>>('/api/user/addCompanyInfo', {
+  return request<BaseResponse<boolean>>('/api/company/addCompanyInfo', {
     method: 'POST',
     headers: {
       'Content-Type': 'application/json',
@@ -35,9 +35,9 @@ export async function addCompany(params: CompanyType.Item) {
   });
 }
 
-// 删除用户信息
+// 删除公司信息
 export async function deleteCompany(id: string) {
-  return request<BaseResponse<boolean>>(`/api/user/deleteCompany/${id}`, {
+  return request<BaseResponse<boolean>>(`/api/company/deleteCompany/${id}`, {
     method: 'DELETE',
   });
 }
