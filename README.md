@@ -1,57 +1,56 @@
-# Ant Design Pro
+# 招聘小程序无忧直聘(管理端)
 
-This project is initialized with [Ant Design Pro](https://pro.ant.design). Follow is the quick guide for how to use.
+:star:此项目采用 React+Ant Design+Ant Design Pro 等技术开发，建议使用 Visual Studio Code 打开，适合学习\二次开发等用途。
 
-## Environment Prepare
+## 项目列表
 
-Install `node_modules`:
+- [无忧直聘前端(Uni-app+Vue2)](https://github.com/zhang2657977442/wuyou-frontend)
+- [无忧直聘后端(Java+SpringBoot2+MybatisPlus+Mysql)](https://github.com/zhang2657977442/wuyou-backend)
+- [无忧直聘管理端(React+Ant Design+Ant Design Pro)](https://github.com/zhang2657977442/wuyou-admin)
 
-```bash
-npm install
-```
+## 项目截图
 
-or
+![](https://raw.githubusercontent.com/zhang2657977442/MyPicGo/master/wuyou-admin/%E6%88%AA%E5%9B%BE1.png) ![](https://raw.githubusercontent.com/zhang2657977442/MyPicGo/master/wuyou-admin/%E6%88%AA%E5%9B%BE2.png)![](https://raw.githubusercontent.com/zhang2657977442/MyPicGo/master/wuyou-admin/%E6%88%AA%E5%9B%BE3.png)
 
-```bash
-yarn
-```
+## 运行步骤
 
-## Provided Scripts
+- 在uer表中插入一条管理员账号数据（账号密码都为admin，也可以自行修改）如下：
 
-Ant Design Pro provides some useful script to help you quick start and build with web project, code style check and test.
+  ```mysql
+  INSERT INTO user`(`id`, `open_id`, `username`, `password`, `mobile`, `avatar`, `role`, `company_id`, `enable_status`, `auth_id`, `register_date`) VALUES ('88888888', NULL, 'admin', 'admin', '11111111111', 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png', 2, NULL, 1, NULL, 1670494650.700);
+  ```
 
-Scripts provided in `package.json`. It's safe to modify or add additional script:
+- 安装依赖
 
-### Start project
+  ```bash
+  npm install
+  ```
 
-```bash
-npm start
-```
+  或
 
-### Build project
+  ```bash
+  yarn
+  ```
 
-```bash
-npm run build
-```
+- 启动项目
 
-### Check code style
+  ```bash
+  npm run dev
+  ```
 
-```bash
-npm run lint
-```
+  或
 
-You can also use script to auto fix some lint error:
+  ```bash
+  yarn dev
+  ```
 
-```bash
-npm run lint:fix
-```
+- 访问 http://localhost:8080
 
-### Test code
+## 开源不易 谢谢支持
 
-```bash
-npm test
-```
+![](https://raw.githubusercontent.com/zhang2657977442/MyPicGo/master/other/%E8%B5%9E%E8%B5%8F%E7%A0%81.jpg)
 
-## More
+如有问题请联系
 
-You can view full document on our [official website](https://pro.ant.design). And welcome any feedback in our [github](https://github.com/ant-design/ant-design-pro).
+- QQ：2657977449
+- 微信：zhang2657977449
