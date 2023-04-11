@@ -5,7 +5,7 @@ const Footer: React.FC = () => {
   const intl = useIntl();
   const defaultMessage = intl.formatMessage({
     id: 'app.copyright.produced',
-    defaultMessage: '人才直聘',
+    defaultMessage: '无忧直聘',
   });
 
   const currentYear = new Date().getFullYear();

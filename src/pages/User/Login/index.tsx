@@ -69,7 +69,7 @@ const Login: React.FC = () => {
       </div>
       <div className={styles.content}>
         <LoginForm
-          title="人才直聘后台管理系统"
+          title="无忧直聘后台管理系统"
           subTitle={intl.formatMessage({
             id: 'pages.layouts.userLayout.title',
             defaultMessage: '欢迎使用',
