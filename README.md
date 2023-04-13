@@ -16,7 +16,7 @@
 
 - 启动[无忧直聘后端服务](https://github.com/zhang2657977442/wuyou-backend)
 
-- 在uer表中插入一条管理员账号数据（账号密码都为admin，也可以自行修改）如下：
+- 在user表中插入一条管理员账号数据（账号密码都为admin，也可以自行修改）如下：
 
   ```mysql
   INSERT INTO `user`(`id`, `open_id`, `username`, `password`, `mobile`, `avatar`, `role`, `company_id`, `enable_status`, `auth_id`, `register_date`) VALUES ('88888888', NULL, 'admin', 'admin', '11111111111', 'https://gw.alipayobjects.com/zos/antfincdn/XAosXuNZyF/BiazfanxmamNRoxxVxka.png', 2, NULL, 1, NULL, 1670494650.700);
